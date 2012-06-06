@@ -1,0 +1,17 @@
+citHeader("To cite R/spclust in publications use:")
+
+citEntry(entry="article",
+         title = "Selecting subsets of experimental populations for phenotyping to maximize genetic diversity",
+         author = personList(as.person("B. Emma Huang"),
+                             as.person("David Clifford"), 
+			     as.person("Colin Cavanagh")),
+         journal = "under review at Theoretical and Applied Genetics",			     
+         year = 2012,
+	 volume = ,
+	 pages = ,
+         
+         textVersion = 
+         paste("Huang, Clifford and Cavanagh (2012) Selecting subsets of experimental populations for phenotyping to maximize genetic diversity.",
+	       "under review at Theoretical and Applied Genetics.")
+         )
+

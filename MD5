@@ -1,0 +1,12 @@
+51d22a75ff3c443511952e3f071c0612 *DESCRIPTION
+213bb44a79c748418facc784d749eca7 *NAMESPACE
+6c24c2d1d1cff0744197fb31d020410e *R/plclust_in_colour.R
+5e866c90eb62ababfc11569970003390 *R/spclust.R
+6fb6000e208b82f7f8dc6ea790a08b60 *R/spclust2.R
+0f0c638684d6c892f13965f2812a718f *R/spdist.R
+e139ce21b1bb62c52466cd0bd1309ad0 *inst/CITATION
+1192816f1da172b55b22419c1fcd99a3 *man/plclust_in_colour.Rd
+c657efa7ca0b5859e866e7831b2ce13b *man/spclust1-all.Rd
+2a502156e5dd7e5a83db05d2a2c2fd83 *man/spclust2-all.Rd
+7b0b1da0abdbef07dbb7052442814a43 *man/spdist.Rd
+3c57040025380648c53172bc1e3fcf0c *src/spclust.c
