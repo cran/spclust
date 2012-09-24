@@ -2,7 +2,7 @@
 \alias{spdist}
 \title{Compute genetic distances for experimental crosses}
 \usage{
-  spdist(object, type = c("bc", "f2", "magic"))
+  spdist(object, type = c("bc", "f2", "magic", "nam"))
 }
 \arguments{
   \item{object}{cross or mpcross object containing genetic
@@ -17,8 +17,9 @@
   This function computes the expected percentage of markers
   shared IBD across the genome for experimental crosses of
   type backcross, doubled haploid, recombinant inbred line
-  ("bc"), F2 ("f2"), or Multiparent Advanced Generation
-  Inter-Cross with 4 or 8 parents ("magic").
+  ("bc"), F2 ("f2"), Multiparent Advanced Generation
+  Inter-Cross with 4 or 8 parents ("magic"), or Nested
+  Association Mapping ("nam").
 }
 \examples{
 # Simulate a map and data using qtl package

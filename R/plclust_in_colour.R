@@ -41,7 +41,7 @@ plclust_in_colour <- function( hclust, lab=hclust$labels, lab.col=rep(1,length(h
      y <- y[order(x)]
      x <- x[order(x)]
      plot( hclust, labels=F, hang=hang, ... )
-text( x=x, y=y[hclust$order]-(max(hclust$height)*hang), labels=lab[hclust$order], col=lab.col[hclust$order], srt=90, adj=c(1,0.5), xpd=NA, ... )
+text( x=x+.5, y=y[hclust$order]-diff(range(hclust$height))*hang, labels=lab[hclust$order], col=lab.col[hclust$order], srt=90, adj=c(1,0.5), xpd=NA, ... )
 }
 
 

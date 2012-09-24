@@ -2,8 +2,9 @@
 #'
 #' This function computes the expected percentage of markers shared IBD across
 #' the genome for experimental crosses of type backcross, doubled haploid, 
-#' recombinant inbred line ("bc"), F2 ("f2"), or Multiparent Advanced 
-#' Generation Inter-Cross with 4 or 8 parents ("magic"). 
+#' recombinant inbred line ("bc"), F2 ("f2"), Multiparent Advanced 
+#' Generation Inter-Cross with 4 or 8 parents ("magic"), or Nested Association
+#' Mapping ("nam"). 
 #'
 #' @useDynLib spclust
 #' @param object cross or mpcross object containing genetic data
@@ -31,7 +32,7 @@
 #' sp <- spclust(dat2, 100, method="ward")
 #' hist(sp$mind[, 2], col="tomato", main="Minimum distances between 100 selected F2 lines", xlab="Distance")
 
-spdist <- function(object, type=c("bc", "f2", "magic")) 
+spdist <- function(object, type=c("bc", "f2", "magic", "nam")) 
 {
 	if (type=="bc")
 	{
@@ -58,12 +59,33 @@ spdist <- function(object, type=c("bc", "f2", "magic"))
 	if (type=="magic")
 	{
 		if (!inherits(object, "mpcross")) stop("Must input object of class mpcross to compute MAGIC distance.\n")
-		mpp <- mpprob(object, program="qtl")
+		mpp <- mpprob(object, program="qtl", est=FALSE)
 		prmat <- lapply(mpp$prob, function(x) x)
 		prmat <- do.call("cbind", prmat)
 		rownames(prmat) <- rownames(mpp$finals)
 		distmat <- .C("distmagic", nrow(prmat), ncol(prmat), nrow(mpp$founders), as.numeric(t(prmat)), distmat=numeric(nrow(prmat)*nrow(prmat)), PACKAGE="spclust")$distmat
 	}
+
+	if (type=="nam")
+	{
+		if (!inherits(object, "nam")) stop("Must input object of class nam to compute NAM distance.\n")
+		## think about how to do this - do we want to treat each 
+		## founder allele separately or consider just as 1s/0s??
+		## need to make sure same full map is input for all 
+		nfamilies <- length(object)
+		prmat <- vector()
+		for (i in 1:nfamilies) {
+		  crp <- calc.genoprob2(object[[i]], object$map)
+		  pr <- lapply(crp$geno, function(x) x$prob[,,1])
+		  pr <- do.call("cbind", pr)
+		  rownames(pr) <- attr(object[[i]], "linenames")
+		  prmat <- rbind(prmat, pr)
+		}
+		### this gives the distance matrix for lines within a family
+		### what about between families?
+		  distmat <- .C("distbc", nrow(prmat), ncol(prmat), as.numeric(t(prmat)), as.numeric(1-t(prmat)), distmat=numeric(nrow(prmat)*nrow(prmat)), PACKAGE="spclust")$distmat
+	}
+
 	output <- matrix(distmat, nrow=nrow(prmat), ncol=nrow(prmat), byrow=TRUE)
 	output <- as.dist(output)
 	attr(output, "linenames") <- rownames(prmat)
